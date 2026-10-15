@@ -5,18 +5,584 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>植物知識大挑戰｜課堂積分遊戲</title>
 <style>
-:root{--ink:#20352f;--green:#24745c;--mint:#eaf6ef;--gold:#ffd166;--coral:#ef7868;--paper:#fffdf7}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#eaf6ef,#fff8e8);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;color:var(--ink);min-height:100vh}
-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px clamp(16px,4vw,48px);background:#fffdf7eF;border-bottom:2px solid #d9eadf;position:sticky;top:0;z-index:3}
-.brand{font-weight:900;font-size:clamp(18px,2.5vw,26px)}.scorebox{background:var(--ink);color:white;padding:10px 18px;border-radius:16px;font-weight:800;white-space:nowrap}.scorebox strong{color:var(--gold);font-size:24px;margin-left:8px;backdrop-filter: blur(10px)}
-main{max-width:1000px;margin:24px auto;padding:0 16px 40px}.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.progress{font-weight:700;color:#4d6a60}.selects{display:flex;gap:8px;flex-wrap:wrap}select,button{font:inherit}select{padding:10px 12px;border:1px solid #bdd5c5;border-radius:12px;background:white;color:var(--ink)}
-.card{background:var(--paper);border:2px solid #dbe9dc;border-radius:26px;padding:clamp(20px,4vw,42px);box-shadow:0 12px 28px #244a3210}.eyebrow{color:var(--green);font-weight:900;letter-spacing:.08em;font-size:14px}.question{font-size:clamp(24px,4vw,38px);line-height:1.5;font-weight:900;margin:16px 0 26px}.chips-label{font-weight:800;margin:0 0 12px}.chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.chip{border:3px solid #e9b84d;background:#fff0bd;border-radius:18px;padding:16px 8px;cursor:pointer;font-weight:900;font-size:clamp(20px,3vw,28px);color:#684b12;transition:.15s}.chip small{display:block;font-size:13px;font-weight:700;margin-top:4px}.chip:hover{transform:translateY(-2px)}.chip.selected{background:var(--gold);border-color:#d88b22;box-shadow:0 0 0 4px #ffd16655}.chip:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.answer{display:none;margin-top:22px;padding:18px 20px;background:var(--mint);border-radius:16px;border-left:5px solid var(--green);font-size:19px;line-height:1.7}.answer.show{display:block}.answer b{display:block;margin-bottom:5px;color:var(--green)}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.btn{border:0;border-radius:13px;padding:13px 18px;font-weight:900;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--green);color:white}.correct{background:#d9f1df;color:#145b35}.wrong{background:#ffe1dc;color:#8c2e24}.neutral{background:#e8eee9;color:var(--ink)}.feedback{font-weight:900;min-height:28px;margin-top:12px}.hint{color:#62786d;font-size:14px;line-height:1.6;margin-top:16px}.bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}.tiny{font-size:13px;color:#6b7d73}.hidden{display:none!important}
-@media(max-width:560px){header{align-items:flex-start}.chips{gap:7px}.chip{padding:14px 4px}.bottom .btn{flex:1}}
+:root {
+  --ink:#20352f;
+  --green:#24745c;
+  --mint:#eaf6ef;
+  --gold:#ffd166;
+  --coral:#ef7868;
+  --paper:#fffdf7
+}
+* {
+  box-sizing:border-box
+}
+body {
+  margin:0;
+  background:linear-gradient(135deg,#eaf6ef,#fff8e8);
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);
+  min-height:100vh
+}
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:18px clamp(16px,4vw,48px);
+  background:#fffdf7eF;
+  border-bottom:2px solid #d9eadf;
+  position:sticky;
+  top:0;
+  z-index:3
+}
+.brand {
+  font-weight:900;
+  font-size:clamp(18px,2.5vw,26px)
+}
+.scorebox {
+  background:var(--ink);
+  color:white;
+  padding:10px 18px;
+  border-radius:16px;
+  font-weight:800;
+  white-space:nowrap
+}
+.scorebox strong {
+  color:var(--gold);
+  font-size:24px;
+  margin-left:8px;
+  backdrop-filter: blur(10px)
+}
+main {
+  max-width:1000px;
+  margin:24px auto;
+  padding:0 16px 40px
+}
+.toolbar {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px
+}
+.progress {
+  font-weight:700;
+  color:#4d6a60
+}
+.selects {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
+select,button {
+  font:inherit
+}
+select {
+  padding:10px 12px;
+  border:1px solid #bdd5c5;
+  border-radius:12px;
+  background:white;
+  color:var(--ink)
+}
+.card {
+  background:var(--paper);
+  border:2px solid #dbe9dc;
+  border-radius:26px;
+  padding:clamp(20px,4vw,42px);
+  box-shadow:0 12px 28px #244a3210
+}
+.eyebrow {
+  color:var(--green);
+  font-weight:900;
+  letter-spacing:.08em;
+  font-size:14px
+}
+.question {
+  font-size:clamp(24px,4vw,38px);
+  line-height:1.5;
+  font-weight:900;
+  margin:16px 0 26px
+}
+.chips-label {
+  font-weight:800;
+  margin:0 0 12px
+}
+.chips {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px
+}
+.chip {
+  border:3px solid #e9b84d;
+  background:#fff0bd;
+  border-radius:18px;
+  padding:16px 8px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:clamp(20px,3vw,28px);
+  color:#684b12;
+  transition:.15s
+}
+.chip small {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-top:4px
+}
+.chip:hover {
+  transform:translateY(-2px)
+}
+.chip.selected {
+  background:var(--gold);
+  border-color:#d88b22;
+  box-shadow:0 0 0 4px #ffd16655
+}
+.chip:disabled {
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none
+}
+.answer {
+  display:none;
+  margin-top:22px;
+  padding:18px 20px;
+  background:var(--mint);
+  border-radius:16px;
+  border-left:5px solid var(--green);
+  font-size:19px;
+  line-height:1.7
+}
+.answer.show {
+  display:block
+}
+.answer b {
+  display:block;
+  margin-bottom:5px;
+  color:var(--green)
+}
+.actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px
+}
+.btn {
+  border:0;
+  border-radius:13px;
+  padding:13px 18px;
+  font-weight:900;
+  cursor:pointer
+}
+.btn:disabled {
+  opacity:.45;
+  cursor:not-allowed
+}
+.primary {
+  background:var(--green);
+  color:white
+}
+.correct {
+  background:#d9f1df;
+  color:#145b35
+}
+.wrong {
+  background:#ffe1dc;
+  color:#8c2e24
+}
+.neutral {
+  background:#e8eee9;
+  color:var(--ink)
+}
+.feedback {
+  font-weight:900;
+  min-height:28px;
+  margin-top:12px
+}
+.hint {
+  color:#62786d;
+  font-size:14px;
+  line-height:1.6;
+  margin-top:16px
+}
+.bottom {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px
+}
+.tiny {
+  font-size:13px;
+  color:#6b7d73
+}
+.hidden {
+  display:none!important
+}
+@media(max-width:560px) {
+  header {
+    align-items:flex-start
+  }
+  .chips {
+    gap:7px
+  }
+  .chip {
+    padding:14px 4px
+  }
+  .bottom .btn {
+    flex:1
+  }
+}
+/* ── 錶哥熊玻璃質感 UI ── */
+:root {
+  --ink:#18382d;
+  --green:#16834f;
+  --mint:#e7f8ee;
+  --gold:#ffd166;
+  --coral:#ef7868;
+  --paper:rgba(255,255,255,.64);
+  --glass-border:rgba(255,255,255,.78);
+}
+html {
+  scroll-behavior:smooth
+}
+body {
+  background:
+    radial-gradient(ellipse at 8% 8%,rgba(114,220,159,.35),transparent 36%),
+    radial-gradient(ellipse at 92% 18%,rgba(255,209,102,.30),transparent 32%),
+    linear-gradient(135deg,#eaf8ef 0%,#f7fff9 48%,#fff7e7 100%);
+  background-attachment:fixed;
+}
+body:before,body:after {
+  content:"";
+  position:fixed;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:50%;
+  filter:blur(2px);
+  opacity:.45;
+}
+body:before {
+  width:240px;
+  height:240px;
+  left:-80px;
+  bottom:8%;
+  background:linear-gradient(135deg,#8ee5b2,#d8ffe5)
+}
+body:after {
+  width:300px;
+  height:300px;
+  right:-110px;
+  top:20%;
+  background:linear-gradient(135deg,#ffe4a0,#fff3cf)
+}
+header {
+  background:rgba(255,255,255,.68);
+  backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  border-bottom:1px solid rgba(255,255,255,.85);
+  box-shadow:0 8px 30px rgba(36,91,58,.07);
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  letter-spacing:-.03em
+}
+.brand-icon {
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  border-radius:16px;
+  background:linear-gradient(145deg,#d9fbe5,#fff);
+  box-shadow:inset 0 1px 0 #fff,0 7px 18px #24745c18;
+  font-size:25px
+}
+.brand small,.sponsor-btn small {
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.03em;
+  opacity:.7;
+  margin-top:3px
+}
+.header-actions {
+  display:flex;
+  align-items:center;
+  gap:12px
+}
+.scorebox {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#173e30,#245f45);
+  box-shadow:0 8px 20px #173e3026;
+  border:1px solid #ffffff26
+}
+.scorebox strong {
+  font-size:25px;
+  margin:0
+}
+.scorebox small {
+  font-size:10px;
+  color:#d6f6df;
+  font-weight:900;
+  letter-spacing:.1em
+}
+.sponsor-btn {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  text-decoration:none;
+  color:#185b3a;
+  padding:9px 13px;
+  border-radius:17px;
+  border:1px solid rgba(255,255,255,.9);
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(224,250,233,.75));
+  box-shadow:0 6px 18px rgba(25,104,61,.10),inset 0 1px 0 #fff;
+  transition:transform .2s,box-shadow .2s,background .2s
+}
+.sponsor-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(25,104,61,.17);
+  background:#fff
+}
+.sponsor-bear {
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  border-radius:13px;
+  background:#dff7e7;
+  font-size:23px
+}
+main {
+  max-width:1040px;
+  margin:30px auto;
+  padding-bottom:54px
+}
+.toolbar {
+  padding:13px 16px;
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:20px;
+  background:rgba(255,255,255,.42);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px)
+}
+.progress {
+  display:flex;
+  align-items:center;
+  gap:8px
+}
+.progress:before {
+  content:"";
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#2ab76b;
+  box-shadow:0 0 0 4px #2ab76b20
+}
+select {
+  border:1px solid #d4e9da;
+  background:rgba(255,255,255,.8);
+  box-shadow:inset 0 1px 2px #1c63350a
+}
+.card {
+  position:relative;
+  overflow:hidden;
+  background:rgba(255,255,255,.66);
+  border:1px solid var(--glass-border);
+  border-radius:30px;
+  padding:clamp(22px,5vw,48px);
+  box-shadow:0 22px 60px rgba(32,83,53,.10),inset 0 1px 0 rgba(255,255,255,.95);
+  backdrop-filter:blur(24px) saturate(145%);
+  -webkit-backdrop-filter:blur(24px) saturate(145%)
+}
+.card:before {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:5px;
+  background:linear-gradient(90deg,#36b96b,#b8efc8,#ffd166)
+}
+.eyebrow {
+  display:inline-flex;
+  align-items:center;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#e2f8e9;
+  color:#167345;
+  letter-spacing:.02em
+}
+.question {
+  letter-spacing:-.025em;
+  text-wrap:pretty
+}
+.chips {
+  gap:14px
+}
+.chip {
+  border:1px solid #f1d078;
+  background:linear-gradient(145deg,#fff7d9,#ffe9a0);
+  box-shadow:0 5px 0 #e7c56c,0 10px 20px #98702110;
+  transition:transform .18s,box-shadow .18s,border-color .18s
+}
+.chip:hover {
+  transform:translateY(-3px);
+  box-shadow:0 8px 0 #e7c56c,0 14px 24px #98702118
+}
+.chip.selected {
+  background:linear-gradient(145deg,#ffe99c,#ffd166);
+  border-color:#e0a62d;
+  box-shadow:0 0 0 4px #ffd16640,0 5px 0 #d9a843
+}
+.btn {
+  border-radius:15px;
+  transition:transform .18s,box-shadow .18s,filter .18s;
+  box-shadow:0 4px 12px rgba(30,75,48,.06)
+}
+.btn:not(:disabled):hover {
+  transform:translateY(-2px);
+  filter:brightness(1.025);
+  box-shadow:0 8px 18px rgba(30,75,48,.12)
+}
+.primary {
+  background:linear-gradient(135deg,#16834f,#2a9d65);
+  box-shadow:0 6px 15px #16834f25;
+  color:white
+}
+.correct {
+  background:linear-gradient(135deg,#d9f7e1,#b9ebc8);
+  color:#145b35
+}
+.wrong {
+  background:linear-gradient(135deg,#ffe8e3,#ffd4cc);
+  color:#8c2e24
+}
+.neutral {
+  background:rgba(255,255,255,.8);
+  border:1px solid #dbe9dc
+}
+.answer {
+  background:rgba(226,248,233,.82);
+  border:1px solid #c7ebd2;
+  border-left:5px solid var(--green);
+  box-shadow:inset 0 1px 0 #fff
+}
+.feedback {
+  padding-top:8px
+}
+.hint {
+  padding:14px 17px;
+  border-radius:17px;
+  background:rgba(255,255,255,.42);
+  border:1px solid rgba(255,255,255,.72)
+}
+footer {
+  max-width:1040px;
+  margin:-28px auto 24px;
+  padding:0 16px;
+  text-align:center;
+  color:#648071;
+  font-size:12px
+}
+@media(max-width:620px) {
+  header {
+    align-items:center;
+    gap:10px;
+    padding:12px
+  }
+  .brand {
+    font-size:16px;
+    gap:8px
+  }
+  .brand-icon {
+    width:38px;
+    height:38px;
+    border-radius:13px;
+    font-size:21px
+  }
+  .header-actions {
+    gap:7px
+  }
+  .sponsor-btn {
+    padding:7px;
+    border-radius:14px;
+    gap:6px
+  }
+  .sponsor-btn small {
+    display:none
+  }
+  .sponsor-btn b {
+    font-size:11px
+  }
+  .sponsor-bear {
+    width:30px;
+    height:30px;
+    font-size:19px;
+    border-radius:10px
+  }
+  .scorebox {
+    padding:8px 10px;
+    gap:5px
+  }
+  .scorebox span {
+    font-size:11px
+  }
+  .scorebox strong {
+    font-size:20px
+  }
+  .scorebox small {
+    display:none
+  }
+  main {
+    margin:18px auto
+  }
+  .toolbar {
+    padding:12px
+  }
+}
+@media(max-width:390px) {
+  .brand small {
+    display:none
+  }
+  .brand {
+    font-size:14px
+  }
+  .brand-icon {
+    width:32px;
+    height:32px
+  }
+  .scorebox span {
+    display:none
+  }
+  .sponsor-btn {
+    gap:4px
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after {
+    scroll-behavior:auto!important;
+    transition:none!important
+  }
+}
 </style>
 </head>
 <body>
-<header><div class="brand">🌿 植物知識大挑戰</div><div class="scorebox">目前積分 <strong id="score">0</strong></div></header>
+<header>
+  <div class="brand"><span class="brand-icon">🌿</span><span>植物知識大挑戰<small>課堂互動積分遊戲</small></span></div>
+  <div class="header-actions">
+    <a class="sponsor-btn" href="https://biaogenet.qzz.io/" target="_blank" rel="noopener noreferrer" aria-label="前往錶哥熊網頁">
+      <img class="sponsor-bear" src="https://biaogenet.qzz.io/images/favicon.png"><span><b>由錶哥熊贊助</b><small>拜訪錶哥熊網頁 ↗</small></span>
+    </a>
+    <div class="scorebox"><span>目前積分</span><strong id="score">0</strong><small>PTS</small></div>
+  </div>
+</header>
 <main>
  <div class="toolbar">
   <div class="progress" id="progress">第 1 / 30 題</div>
@@ -44,6 +610,7 @@ main{max-width:1000px;margin:24px auto;padding:0 16px 40px}.toolbar{display:flex
  </section>
  <p class="hint">玩法：先選籌碼，再讓學生回答。老師按「揭曉參考答案」後，依學生回答按「答對」或「答錯」。答對加上所選積分，答錯扣除所選積分；積分最低為 0。每題籌碼會逐步提高，可用單元選單篩選題目。</p>
 </main>
+<footer>🌱 用好奇心探索植物世界 · 網頁架設由錶哥熊贊助</footer>
 <script>
 const questions = [
 {unit:"2-3",title:"營養器官的繁殖",q:"植物的根、莖和葉，主要功能是什麼？",a:"幫助植物生長，提供所需的養分和水分。"},
