@@ -3,250 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>植物知識大挑戰｜課堂積分遊戲</title>
+<title>自然籌碼挑戰｜課堂積分遊戲</title>
 <style>
-:root {
-  --ink:#20352f;
-  --green:#24745c;
-  --mint:#eaf6ef;
-  --gold:#ffd166;
-  --coral:#ef7868;
-  --paper:#fffdf7
-}
-* {
-  box-sizing:border-box
-}
-body {
-  margin:0;
-  background:linear-gradient(135deg,#eaf6ef,#fff8e8);
-  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
-  color:var(--ink);
-  min-height:100vh
-}
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  padding:18px clamp(16px,4vw,48px);
-  background:#fffdf7eF;
-  border-bottom:2px solid #d9eadf;
-  position:sticky;
-  top:0;
-  z-index:3
-}
-.brand {
-  font-weight:900;
-  font-size:clamp(18px,2.5vw,26px)
-}
-.scorebox {
-  background:var(--ink);
-  color:white;
-  padding:10px 18px;
-  border-radius:16px;
-  font-weight:800;
-  white-space:nowrap
-}
-.scorebox strong {
-  color:var(--gold);
-  font-size:24px;
-  margin-left:8px;
-  backdrop-filter: blur(10px)
-}
-main {
-  max-width:1000px;
-  margin:24px auto;
-  padding:0 16px 40px
-}
-.toolbar {
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:16px
-}
-.progress {
-  font-weight:700;
-  color:#4d6a60
-}
-.selects {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap
-}
-select,button {
-  font:inherit
-}
-select {
-  padding:10px 12px;
-  border:1px solid #bdd5c5;
-  border-radius:12px;
-  background:white;
-  color:var(--ink)
-}
-.card {
-  background:var(--paper);
-  border:2px solid #dbe9dc;
-  border-radius:26px;
-  padding:clamp(20px,4vw,42px);
-  box-shadow:0 12px 28px #244a3210
-}
-.eyebrow {
-  color:var(--green);
-  font-weight:900;
-  letter-spacing:.08em;
-  font-size:14px
-}
-.question {
-  font-size:clamp(24px,4vw,38px);
-  line-height:1.5;
-  font-weight:900;
-  margin:16px 0 26px
-}
-.chips-label {
-  font-weight:800;
-  margin:0 0 12px
-}
-.chips {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px
-}
-.chip {
-  border:3px solid #e9b84d;
-  background:#fff0bd;
-  border-radius:18px;
-  padding:16px 8px;
-  cursor:pointer;
-  font-weight:900;
-  font-size:clamp(20px,3vw,28px);
-  color:#684b12;
-  transition:.15s
-}
-.chip small {
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin-top:4px
-}
-.chip:hover {
-  transform:translateY(-2px)
-}
-.chip.selected {
-  background:var(--gold);
-  border-color:#d88b22;
-  box-shadow:0 0 0 4px #ffd16655
-}
-.chip:disabled {
-  opacity:.45;
-  cursor:not-allowed;
-  transform:none
-}
-.answer {
-  display:none;
-  margin-top:22px;
-  padding:18px 20px;
-  background:var(--mint);
-  border-radius:16px;
-  border-left:5px solid var(--green);
-  font-size:19px;
-  line-height:1.7
-}
-.answer.show {
-  display:block
-}
-.answer b {
-  display:block;
-  margin-bottom:5px;
-  color:var(--green)
-}
-.actions {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:20px
-}
-.btn {
-  border:0;
-  border-radius:13px;
-  padding:13px 18px;
-  font-weight:900;
-  cursor:pointer
-}
-.btn:disabled {
-  opacity:.45;
-  cursor:not-allowed
-}
-.primary {
-  background:var(--green);
-  color:white
-}
-.correct {
-  background:#d9f1df;
-  color:#145b35
-}
-.wrong {
-  background:#ffe1dc;
-  color:#8c2e24
-}
-.neutral {
-  background:#e8eee9;
-  color:var(--ink)
-}
-.feedback {
-  font-weight:900;
-  min-height:28px;
-  margin-top:12px
-}
-.hint {
-  color:#62786d;
-  font-size:14px;
-  line-height:1.6;
-  margin-top:16px
-}
-.bottom {
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:18px
-}
-.tiny {
-  font-size:13px;
-  color:#6b7d73
-}
-.hidden {
-  display:none!important
-}
-@media(max-width:560px) {
-  header {
-    align-items:flex-start
-  }
-  .chips {
-    gap:7px
-  }
-  .chip {
-    padding:14px 4px
-  }
-  .bottom .btn {
-    flex:1
-  }
-}
-/* ── 錶哥熊玻璃質感 UI ── */
 :root {
   --ink:#18382d;
   --green:#16834f;
   --mint:#e7f8ee;
   --gold:#ffd166;
   --coral:#ef7868;
-  --paper:rgba(255,255,255,.64);
+  --paper:rgba(255,255,255,.66);
   --glass-border:rgba(255,255,255,.78);
 }
-html {
-  scroll-behavior:smooth
-}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 body {
+  margin:0;
+  min-height:100vh;
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);
   background:
     radial-gradient(ellipse at 8% 8%,rgba(114,220,159,.35),transparent 36%),
     radial-gradient(ellipse at 92% 18%,rgba(255,209,102,.30),transparent 32%),
@@ -263,405 +37,647 @@ body:before,body:after {
   opacity:.45;
 }
 body:before {
-  width:240px;
-  height:240px;
-  left:-80px;
-  bottom:8%;
-  background:linear-gradient(135deg,#8ee5b2,#d8ffe5)
+  width:240px;height:240px;left:-80px;bottom:8%;
+  background:linear-gradient(135deg,#8ee5b2,#d8ffe5);
 }
 body:after {
-  width:300px;
-  height:300px;
-  right:-110px;
-  top:20%;
-  background:linear-gradient(135deg,#ffe4a0,#fff3cf)
+  width:300px;height:300px;right:-110px;top:20%;
+  background:linear-gradient(135deg,#ffe4a0,#fff3cf);
 }
 header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:18px clamp(16px,4vw,48px);
   background:rgba(255,255,255,.68);
   backdrop-filter:blur(22px) saturate(150%);
   -webkit-backdrop-filter:blur(22px) saturate(150%);
   border-bottom:1px solid rgba(255,255,255,.85);
   box-shadow:0 8px 30px rgba(36,91,58,.07);
+  position:sticky;top:0;z-index:3;
 }
 .brand {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  letter-spacing:-.03em
+  display:flex;align-items:center;gap:12px;
+  font-weight:900;
+  font-size:clamp(18px,2.5vw,26px);
+  letter-spacing:-.03em;
 }
 .brand-icon {
-  display:grid;
-  place-items:center;
-  width:46px;
-  height:46px;
-  border-radius:16px;
+  display:grid;place-items:center;
+  width:46px;height:46px;border-radius:16px;
   background:linear-gradient(145deg,#d9fbe5,#fff);
   box-shadow:inset 0 1px 0 #fff,0 7px 18px #24745c18;
-  font-size:25px
+  font-size:25px;flex-shrink:0;
 }
 .brand small,.sponsor-btn small {
-  display:block;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.03em;
-  opacity:.7;
-  margin-top:3px
+  display:block;font-size:11px;font-weight:700;
+  letter-spacing:.03em;opacity:.7;margin-top:3px;
 }
-.header-actions {
-  display:flex;
-  align-items:center;
-  gap:12px
-}
+.header-actions { display:flex;align-items:center;gap:12px; }
 .scorebox {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:9px 14px;
-  border-radius:18px;
+  display:flex;align-items:center;gap:8px;
+  padding:9px 14px;border-radius:18px;
   background:linear-gradient(135deg,#173e30,#245f45);
   box-shadow:0 8px 20px #173e3026;
-  border:1px solid #ffffff26
+  border:1px solid #ffffff26;color:white;
+  font-weight:800;white-space:nowrap;
 }
-.scorebox strong {
-  font-size:25px;
-  margin:0
-}
-.scorebox small {
-  font-size:10px;
-  color:#d6f6df;
-  font-weight:900;
-  letter-spacing:.1em
-}
+.scorebox strong { color:var(--gold);font-size:25px;margin:0; }
+.scorebox small { font-size:10px;color:#d6f6df;font-weight:900;letter-spacing:.1em; }
 .sponsor-btn {
-  display:flex;
-  align-items:center;
-  gap:9px;
-  text-decoration:none;
-  color:#185b3a;
-  padding:9px 13px;
-  border-radius:17px;
+  display:flex;align-items:center;gap:9px;
+  text-decoration:none;color:#185b3a;
+  padding:9px 13px;border-radius:17px;
   border:1px solid rgba(255,255,255,.9);
   background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(224,250,233,.75));
   box-shadow:0 6px 18px rgba(25,104,61,.10),inset 0 1px 0 #fff;
-  transition:transform .2s,box-shadow .2s,background .2s
+  transition:transform .2s,box-shadow .2s,background .2s;
 }
 .sponsor-btn:hover {
   transform:translateY(-2px);
   box-shadow:0 10px 24px rgba(25,104,61,.17);
-  background:#fff
+  background:#fff;
 }
 .sponsor-bear {
-  display:grid;
-  place-items:center;
-  width:38px;
-  height:38px;
-  border-radius:13px;
-  background:#dff7e7;
-  font-size:23px
+  display:block;width:38px;height:38px;border-radius:13px;
+  background:#dff7e7;font-size:23px;object-fit:contain;
 }
-main {
-  max-width:1040px;
-  margin:30px auto;
-  padding-bottom:54px
-}
+main { max-width:1040px;margin:30px auto;padding:0 16px 54px; }
 .toolbar {
-  padding:13px 16px;
-  border:1px solid rgba(255,255,255,.8);
-  border-radius:20px;
-  background:rgba(255,255,255,.42);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px)
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:12px;margin-bottom:16px;
+  padding:13px 16px;border:1px solid rgba(255,255,255,.8);
+  border-radius:20px;background:rgba(255,255,255,.42);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
 }
-.progress {
-  display:flex;
-  align-items:center;
-  gap:8px
-}
+.progress { font-weight:700;color:#4d6a60;display:flex;align-items:center;gap:8px; }
 .progress:before {
-  content:"";
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#2ab76b;
-  box-shadow:0 0 0 4px #2ab76b20
+  content:"";width:9px;height:9px;border-radius:50%;
+  background:#2ab76b;box-shadow:0 0 0 4px #2ab76b20;
 }
+.selects { display:flex;gap:8px;flex-wrap:wrap; }
+select,button { font:inherit; }
 select {
-  border:1px solid #d4e9da;
-  background:rgba(255,255,255,.8);
-  box-shadow:inset 0 1px 2px #1c63350a
+  padding:10px 12px;border:1px solid #d4e9da;border-radius:12px;
+  background:rgba(255,255,255,.8);color:var(--ink);
+  max-width:100%;
 }
 .card {
-  position:relative;
-  overflow:hidden;
+  position:relative;overflow:hidden;
   background:rgba(255,255,255,.66);
   border:1px solid var(--glass-border);
-  border-radius:30px;
-  padding:clamp(22px,5vw,48px);
+  border-radius:30px;padding:clamp(22px,5vw,48px);
   box-shadow:0 22px 60px rgba(32,83,53,.10),inset 0 1px 0 rgba(255,255,255,.95);
   backdrop-filter:blur(24px) saturate(145%);
-  -webkit-backdrop-filter:blur(24px) saturate(145%)
+  -webkit-backdrop-filter:blur(24px) saturate(145%);
 }
 .card:before {
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  height:5px;
-  background:linear-gradient(90deg,#36b96b,#b8efc8,#ffd166)
+  content:"";position:absolute;left:0;right:0;top:0;height:5px;
+  background:linear-gradient(90deg,#36b96b,#b8efc8,#ffd166);
 }
 .eyebrow {
-  display:inline-flex;
-  align-items:center;
-  padding:7px 12px;
-  border-radius:999px;
-  background:#e2f8e9;
-  color:#167345;
-  letter-spacing:.02em
+  display:inline-flex;align-items:center;padding:7px 12px;
+  border-radius:999px;background:#e2f8e9;color:#167345;
+  font-weight:900;letter-spacing:.02em;font-size:14px;
 }
 .question {
-  letter-spacing:-.025em;
-  text-wrap:pretty
+  font-size:clamp(24px,4vw,38px);line-height:1.5;
+  font-weight:900;margin:16px 0 26px;letter-spacing:-.025em;
 }
-.chips {
-  gap:14px
-}
+.chips-label { font-weight:800;margin:0 0 12px; }
+.chips { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px; }
 .chip {
   border:1px solid #f1d078;
   background:linear-gradient(145deg,#fff7d9,#ffe9a0);
   box-shadow:0 5px 0 #e7c56c,0 10px 20px #98702110;
-  transition:transform .18s,box-shadow .18s,border-color .18s
+  border-radius:18px;padding:16px 8px;cursor:pointer;
+  font-weight:900;font-size:clamp(20px,3vw,28px);color:#684b12;
+  transition:transform .18s,box-shadow .18s,border-color .18s;
 }
+.chip small { display:block;font-size:13px;font-weight:700;margin-top:4px; }
 .chip:hover {
   transform:translateY(-3px);
-  box-shadow:0 8px 0 #e7c56c,0 14px 24px #98702118
+  box-shadow:0 8px 0 #e7c56c,0 14px 24px #98702118;
 }
 .chip.selected {
   background:linear-gradient(145deg,#ffe99c,#ffd166);
   border-color:#e0a62d;
-  box-shadow:0 0 0 4px #ffd16640,0 5px 0 #d9a843
+  box-shadow:0 0 0 4px #ffd16640,0 5px 0 #d9a843;
 }
+.chip:disabled { opacity:.45;cursor:not-allowed;transform:none; }
+.answer {
+  display:none;margin-top:22px;padding:18px 20px;
+  background:rgba(226,248,233,.82);border:1px solid #c7ebd2;
+  border-radius:16px;border-left:5px solid var(--green);
+  box-shadow:inset 0 1px 0 #fff;font-size:19px;line-height:1.7;
+}
+.answer.show { display:block; }
+.answer b { display:block;margin-bottom:5px;color:var(--green); }
+.actions { display:flex;flex-wrap:wrap;gap:10px;margin-top:20px; }
 .btn {
-  border-radius:15px;
+  border:0;border-radius:15px;padding:13px 18px;
+  font-weight:900;cursor:pointer;
   transition:transform .18s,box-shadow .18s,filter .18s;
-  box-shadow:0 4px 12px rgba(30,75,48,.06)
+  box-shadow:0 4px 12px rgba(30,75,48,.06);
 }
+.btn:disabled { opacity:.45;cursor:not-allowed; }
 .btn:not(:disabled):hover {
-  transform:translateY(-2px);
-  filter:brightness(1.025);
-  box-shadow:0 8px 18px rgba(30,75,48,.12)
+  transform:translateY(-2px);filter:brightness(1.025);
+  box-shadow:0 8px 18px rgba(30,75,48,.12);
 }
 .primary {
   background:linear-gradient(135deg,#16834f,#2a9d65);
-  box-shadow:0 6px 15px #16834f25;
-  color:white
+  box-shadow:0 6px 15px #16834f25;color:white;
 }
-.correct {
-  background:linear-gradient(135deg,#d9f7e1,#b9ebc8);
-  color:#145b35
-}
-.wrong {
-  background:linear-gradient(135deg,#ffe8e3,#ffd4cc);
-  color:#8c2e24
-}
-.neutral {
-  background:rgba(255,255,255,.8);
-  border:1px solid #dbe9dc
-}
-.answer {
-  background:rgba(226,248,233,.82);
-  border:1px solid #c7ebd2;
-  border-left:5px solid var(--green);
-  box-shadow:inset 0 1px 0 #fff
-}
-.feedback {
-  padding-top:8px
-}
+.correct { background:linear-gradient(135deg,#d9f7e1,#b9ebc8);color:#145b35; }
+.wrong { background:linear-gradient(135deg,#ffe8e3,#ffd4cc);color:#8c2e24; }
+.neutral { background:rgba(255,255,255,.8);border:1px solid #dbe9dc;color:var(--ink); }
+.feedback { font-weight:900;min-height:28px;margin-top:12px;padding-top:8px; }
 .hint {
-  padding:14px 17px;
-  border-radius:17px;
-  background:rgba(255,255,255,.42);
-  border:1px solid rgba(255,255,255,.72)
+  color:#62786d;font-size:14px;line-height:1.6;margin-top:16px;
+  padding:14px 17px;border-radius:17px;background:rgba(255,255,255,.42);
+  border:1px solid rgba(255,255,255,.72);
 }
+.bottom { display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px; }
+.tiny { font-size:13px;color:#6b7d73; }
+.hidden { display:none!important; }
+.import-panel {
+  margin-top:16px;padding:16px;border-radius:18px;
+  background:rgba(255,255,255,.55);border:1px solid #dbe9dc;
+}
+.import-panel summary { font-weight:900;cursor:pointer;color:#167345; }
+.import-panel p { font-size:13px;line-height:1.6;color:#62786d; }
+.import-row { display:flex;flex-wrap:wrap;align-items:center;gap:10px; }
+.import-row input[type=file] { max-width:100%;font-size:14px; }
+.import-status { margin-top:10px;font-size:14px;font-weight:700;white-space:pre-wrap; }
 footer {
-  max-width:1040px;
-  margin:-28px auto 24px;
-  padding:0 16px;
-  text-align:center;
-  color:#648071;
-  font-size:12px
+  max-width:1040px;margin:-28px auto 24px;padding:0 16px;
+  text-align:center;color:#648071;font-size:12px;
 }
 @media(max-width:620px) {
-  header {
-    align-items:center;
-    gap:10px;
-    padding:12px
-  }
-  .brand {
-    font-size:16px;
-    gap:8px
-  }
-  .brand-icon {
-    width:38px;
-    height:38px;
-    border-radius:13px;
-    font-size:21px
-  }
-  .header-actions {
-    gap:7px
-  }
-  .sponsor-btn {
-    padding:7px;
-    border-radius:14px;
-    gap:6px
-  }
-  .sponsor-btn small {
-    display:none
-  }
-  .sponsor-btn b {
-    font-size:11px
-  }
-  .sponsor-bear {
-    width:30px;
-    height:30px;
-    font-size:19px;
-    border-radius:10px
-  }
-  .scorebox {
-    padding:8px 10px;
-    gap:5px
-  }
-  .scorebox span {
-    font-size:11px
-  }
-  .scorebox strong {
-    font-size:20px
-  }
-  .scorebox small {
-    display:none
-  }
-  main {
-    margin:18px auto
-  }
-  .toolbar {
-    padding:12px
-  }
+  header { align-items:center;gap:10px;padding:12px; }
+  .brand { font-size:16px;gap:8px; }
+  .brand-icon { width:38px;height:38px;border-radius:13px;font-size:21px; }
+  .header-actions { gap:7px; }
+  .sponsor-btn { padding:7px;border-radius:14px;gap:6px; }
+  .sponsor-btn small { display:none; }
+  .sponsor-btn b { font-size:11px; }
+  .sponsor-bear { width:30px;height:30px;border-radius:10px; }
+  .scorebox { padding:8px 10px;gap:5px; }
+  .scorebox span { font-size:11px; }
+  .scorebox strong { font-size:20px; }
+  .scorebox small { display:none; }
+  main { margin:18px auto; }
+  .toolbar { padding:12px; }
+  .chips { gap:7px; }
+  .chip { padding:14px 4px; }
+  .bottom .btn { flex:1; }
 }
 @media(max-width:390px) {
-  .brand small {
-    display:none
-  }
-  .brand {
-    font-size:14px
-  }
-  .brand-icon {
-    width:32px;
-    height:32px
-  }
-  .scorebox span {
-    display:none
-  }
-  .sponsor-btn {
-    gap:4px
-  }
+  .brand small { display:none; }
+  .brand { font-size:14px; }
+  .brand-icon { width:32px;height:32px; }
+  .scorebox span { display:none; }
+  .sponsor-btn { gap:4px; }
 }
 @media(prefers-reduced-motion:reduce) {
-  *,*:before,*:after {
-    scroll-behavior:auto!important;
-    transition:none!important
-  }
+  *,*:before,*:after { scroll-behavior:auto!important;transition:none!important; }
 }
 </style>
 </head>
 <body>
 <header>
-  <div class="brand"><span class="brand-icon">🌿</span><span>植物知識大挑戰<small>課堂互動積分遊戲</small></span></div>
+  <div class="brand">
+    <span class="brand-icon">🌿</span>
+    <span>自然籌碼挑戰<small>自然科學課堂積分遊戲</small></span>
+  </div>
   <div class="header-actions">
-    <a class="sponsor-btn" href="https://biaogenet.qzz.io/" target="_blank" rel="noopener noreferrer" aria-label="前往錶哥熊網頁">
-      <img class="sponsor-bear" src="https://biaogenet.qzz.io/images/favicon.png"><span><b>由錶哥熊贊助</b><small>拜訪錶哥熊網頁 ↗</small></span>
+    <a class="sponsor-btn" href="https://biaogenet.qzz.io/" target="_blank"
+       rel="noopener noreferrer" aria-label="前往錶哥熊網頁">
+      <img class="sponsor-bear" src="https://biaogenet.qzz.io/images/favicon.png" alt="錶哥熊">
+      <span><b>由錶哥熊贊助</b><small>拜訪錶哥熊網頁 ↗</small></span>
     </a>
-    <div class="scorebox"><span>目前積分</span><strong id="score">0</strong><small>PTS</small></div>
+    <div class="scorebox">
+      <span>目前積分</span><strong id="score">0</strong><small>PTS</small>
+    </div>
   </div>
 </header>
+
 <main>
- <div class="toolbar">
-  <div class="progress" id="progress">第 1 / 30 題</div>
-  <div class="selects">
-   <select id="sectionFilter" aria-label="選擇題目單元"><option value="all">全部單元</option><option value="2-3">2-3 營養器官的繁殖</option><option value="3-1">3-1 經濟植物</option><option value="3-2">3-2 植物仿生學</option></select>
-   <button class="btn neutral" id="restart">重新開始</button>
+  <div class="toolbar">
+    <div class="progress" id="progress">第 1 / 30 題</div>
+    <div class="selects">
+      <select id="sectionFilter" aria-label="選擇題目單元">
+        <option value="all">全部單元</option>
+      </select>
+      <button class="btn neutral" id="restart">重新開始</button>
+    </div>
   </div>
- </div>
- <section class="card">
-  <div class="eyebrow" id="section">2-3｜營養器官的繁殖</div>
-  <div class="question" id="question">準備開始！</div>
-  <p class="chips-label">① 先選擇你要下注的籌碼</p>
-  <div class="chips" id="chips"></div>
-  <div class="answer" id="answer"><b>參考答案</b><span id="answerText"></span></div>
-  <div class="actions" id="judgeActions">
-   <button class="btn primary" id="reveal" disabled>揭曉參考答案</button>
-   <button class="btn correct" id="correct" disabled>答對 ✓</button>
-   <button class="btn wrong" id="wrong" disabled>答錯 −</button>
-  </div>
-  <div class="feedback" id="feedback" aria-live="polite"></div>
-  <div class="bottom">
-   <div class="tiny" id="betInfo">選好籌碼後，請學生作答，再由老師判定。</div>
-   <button class="btn primary" id="next" disabled>下一題 →</button>
-  </div>
- </section>
- <p class="hint">玩法：先選籌碼，再讓學生回答。老師按「揭曉參考答案」後，依學生回答按「答對」或「答錯」。答對加上所選積分，答錯扣除所選積分；積分最低為 0。每題籌碼會逐步提高，可用單元選單篩選題目。</p>
+
+  <section class="card">
+    <div class="eyebrow" id="section">準備開始</div>
+    <div class="question" id="question">準備開始！</div>
+
+    <p class="chips-label">① 先選擇你要下注的籌碼</p>
+    <div class="chips" id="chips"></div>
+
+    <div class="answer" id="answer">
+      <b>參考答案</b>
+      <span id="answerText"></span>
+    </div>
+
+    <div class="actions" id="judgeActions">
+      <button class="btn primary" id="reveal" disabled>揭曉參考答案</button>
+      <button class="btn correct" id="correct" disabled>答對 ✓</button>
+      <button class="btn wrong" id="wrong" disabled>答錯 −</button>
+    </div>
+
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <div class="bottom">
+      <div class="tiny" id="betInfo">選好籌碼後，請學生作答，再由老師判定。</div>
+      <button class="btn primary" id="next" disabled>下一題 →</button>
+    </div>
+  </section>
+
+  <details class="import-panel">
+    <summary>📂 匯入其他自然科題庫（JSON）</summary>
+    <p>
+      可匯入其他年級或單元的題目。匯入後會加入題庫，不會刪除原本的 30 題植物題目。
+      請使用下方格式，並將檔案儲存為 UTF-8 編碼的 .json 檔案。
+    </p>
+    <div class="import-row">
+      <input id="jsonFile" type="file" accept=".json,application/json">
+      <button class="btn primary" id="importBtn" type="button">匯入題庫</button>
+      <button class="btn neutral" id="downloadExample" type="button">下載範例 JSON</button>
+    </div>
+    <div class="import-status" id="importStatus" role="status" aria-live="polite"></div>
+  </details>
+
+  <p class="hint">
+    玩法：先選籌碼，再讓學生回答。老師按「揭曉參考答案」後，依學生回答按「答對」或「答錯」。
+    答對加上所選積分，答錯扣除所選積分；積分最低為 0。
+    第一題籌碼為 1／3／5 分，後續題目依序提高。可用單元選單篩選題目。
+  </p>
 </main>
-<footer>🌱 用好奇心探索植物世界 · 網頁架設由錶哥熊贊助</footer>
+
+<footer>🌱 用好奇心探索自然世界 · 網頁架設由錶哥熊贊助</footer>
+
 <script>
-const questions = [
-{unit:"2-3",title:"營養器官的繁殖",q:"植物的根、莖和葉，主要功能是什麼？",a:"幫助植物生長，提供所需的養分和水分。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"除了提供養分和水分外，哪些植物的根、莖、葉還具有繁殖功能？",a:"吊蘭、馬鈴薯、石蓮、黃金葛、番薯、萬年青、落地生根等。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"吊蘭具有什麼樣的結構，可以下垂來長出新芽？",a:"長長的走莖。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"馬鈴薯放在廚房太久，會冒出綠色新芽的是哪個部位？",a:"塊莖。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"石蓮通常利用哪一個器官進行繁殖，且葉旁會長出新芽？",a:"葉。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"黃金葛的莖上的節會長出什麼？",a:"葉子和根。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"番薯適合使用哪一種方式進行繁殖？",a:"根繁殖，例如將番薯的塊根放在水中觀察。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"萬年青適合使用哪一種方式進行繁殖？",a:"莖繁殖，例如將萬年青的莖放在水中觀察。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"落地生根適合使用哪一種方式進行繁殖？",a:"葉繁殖，例如將葉放在土壤上或濕棉花上。"},
-{unit:"2-3",title:"營養器官的繁殖",q:"植物除了利用種子繁殖外，還可以利用哪些部位繁衍下一代？",a:"根、莖、葉等營養器官。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"植物藉由什麼讓生命一代一代延續？",a:"繁殖。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"人類會將具有什麼性質的植物大量繁殖並販售？",a:"具有經濟價值。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"哪一種植物是臺灣具國際競爭力、受到世界各地喜愛的經濟植物？",a:"蘭花。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"臺灣蘭花主要外銷到哪些國家或地區？",a:"美國、日本和歐洲等地。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"花農如何維持蘭花優良品質並快速繁殖？",a:"運用繁殖技術讓每株繁殖出的花維持優良品質，有時也透過品種改良培育新品種。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"茶樹的葉子可以加工製成什麼，並外銷世界各地？",a:"各種茶。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"茶樹的葉子可以加工做成什麼？",a:"茶葉。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"有些農作物經過什麼過程後，可能更好吃或產量更多？",a:"品種改良。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"課本列舉哪些經過品種改良、讓果實更好吃的水果？",a:"鳳梨釋迦、芒果。"},
-{unit:"3-1",title:"經濟植物在人類生活中的應用",q:"人類會選擇栽培具有哪些特性的植物，以維持優良品質並改良品種？",a:"栽培容易、生長快速，且能大量繁殖的植物。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"人類從植物身上獲取靈感，發展新奇創意，稱為什麼？",a:"向植物學習的仿生學。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"大花威豐草的果實上有什麼構造，可以黏在衣服或動物身上傳播種子？",a:"許多微小的倒鉤刺。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"魔鬼氈模仿了哪一種植物果實構造的特性來設計？",a:"大花威豐草。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"雨後蓮花上的水珠，通常會保持什麼形狀滾動？",a:"圓球狀。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"為什麼蓮花生長在有汙泥的地方，卻能保持清潔？",a:"因為蓮葉表面的特殊構造，形成蓮葉效應。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"用電子顯微鏡觀察蓮葉表面，可以看到凸起具有什麼尺寸的纖維毛構造？",a:"奈米尺寸。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"蓮葉表面看不見的纖維毛構造，能讓葉子具有哪些特性？",a:"不吸水、防水和自我清潔的特性。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"蓮葉表面的不吸水、防水和自我清潔特性，稱為什麼效應？",a:"蓮葉效應。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"運用蓮葉效應的概念發明的產品，常具有什麼效果？",a:"防水及防塵效果。"},
-{unit:"3-2",title:"向植物學習的仿生學",q:"大花威豐草果實上的倒鉤刺和魔鬼氈有什麼相似之處？",a:"兩者都具有鉤狀構造，可以互相黏附或固定。"}
+/* =====================================================
+   原始植物題庫：保留 30 題
+   ===================================================== */
+const originalQuestions = [
+  {unit:"2-3",title:"營養器官的繁殖",q:"植物的根、莖和葉，主要功能是什麼？",a:"幫助植物生長，提供所需的養分和水分。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"除了提供養分和水分外，哪些植物的根、莖、葉還具有繁殖功能？",a:"吊蘭、馬鈴薯、石蓮、黃金葛、番薯、萬年青、落地生根等。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"吊蘭具有什麼樣的結構，可以下垂來長出新芽？",a:"長長的走莖。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"馬鈴薯放在廚房太久，會冒出綠色新芽的是哪個部位？",a:"塊莖。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"石蓮通常利用哪一個器官進行繁殖，且葉旁會長出新芽？",a:"葉。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"黃金葛的莖上的節會長出什麼？",a:"葉子和根。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"番薯適合使用哪一種方式進行繁殖？",a:"根繁殖，例如將番薯的塊根放在水中觀察。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"萬年青適合使用哪一種方式進行繁殖？",a:"莖繁殖，例如將萬年青的莖放在水中觀察。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"落地生根適合使用哪一種方式進行繁殖？",a:"葉繁殖，例如將葉放在土壤上或濕棉花上。"},
+  {unit:"2-3",title:"營養器官的繁殖",q:"植物除了利用種子繁殖外，還可以利用哪些部位繁衍下一代？",a:"根、莖、葉等營養器官。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"植物藉由什麼讓生命一代一代延續？",a:"繁殖。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"人類會將具有什麼性質的植物大量繁殖並販售？",a:"具有經濟價值。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"哪一種植物是臺灣具國際競爭力、受到世界各地喜愛的經濟植物？",a:"蘭花。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"臺灣蘭花主要外銷到哪些國家或地區？",a:"美國、日本和歐洲等地。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"花農如何維持蘭花優良品質並快速繁殖？",a:"運用繁殖技術讓每株繁殖出的花維持優良品質，有時也透過品種改良培育新品種。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"茶樹的葉子可以加工製成什麼，並外銷世界各地？",a:"各種茶。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"茶樹的葉子可以加工做成什麼？",a:"茶葉。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"有些農作物經過什麼過程後，可能更好吃或產量更多？",a:"品種改良。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"課本列舉哪些經過品種改良、讓果實更好吃的水果？",a:"鳳梨釋迦、芒果。"},
+  {unit:"3-1",title:"經濟植物在人類生活中的應用",q:"人類會選擇栽培具有哪些特性的植物，以維持優良品質並改良品種？",a:"栽培容易、生長快速，且能大量繁殖的植物。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"人類從植物身上獲取靈感，發展新奇創意，稱為什麼？",a:"向植物學習的仿生學。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"大花威豐草的果實上有什麼構造，可以黏在衣服或動物身上傳播種子？",a:"許多微小的倒鉤刺。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"魔鬼氈模仿了哪一種植物果實構造的特性來設計？",a:"大花威豐草。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"雨後蓮花上的水珠，通常會保持什麼形狀滾動？",a:"圓球狀。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"為什麼蓮花生長在有汙泥的地方，卻能保持清潔？",a:"因為蓮葉表面的特殊構造，形成蓮葉效應。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"用電子顯微鏡觀察蓮葉表面，可以看到凸起具有什麼尺寸的纖維毛構造？",a:"奈米尺寸。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"蓮葉表面看不見的纖維毛構造，能讓葉子具有哪些特性？",a:"不吸水、防水和自我清潔的特性。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"蓮葉表面的不吸水、防水和自我清潔特性，稱為什麼效應？",a:"蓮葉效應。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"運用蓮葉效應的概念發明的產品，常具有什麼效果？",a:"防水及防塵效果。"},
+  {unit:"3-2",title:"向植物學習的仿生學",q:"大花威豐草果實上的倒鉤刺和魔鬼氈有什麼相似之處？",a:"兩者都具有鉤狀構造，可以互相黏附或固定。"}
 ];
-let score=0, order=[], index=0, selected=null, judged=false, revealed=false;
-const $=id=>document.getElementById(id);
-function makeOrder(){const filter=$("sectionFilter").value;order=questions.map((_,i)=>i).filter(i=>filter==="all"||questions[i].unit===filter);index=0;selected=null;judged=false;revealed=false;render();}
-function chipValues(){if(index===0)return [1,3,5];return [5+(index-1)*5,10+(index-1)*5,15+(index-1)*5];}
-function render(){
- if(index>=order.length){$("section").textContent="挑戰完成";$("question").textContent="🎉 太棒了！本輪題目全部完成！";$("chips").innerHTML="";$("answer").classList.remove("show");$("judgeActions").classList.add("hidden");$("next").textContent="再玩一次 ↻";$("next").disabled=false;$("progress").textContent=`完成 ${order.length} 題`; $("feedback").textContent=`本輪結束！目前積分：${score} 分`; $("betInfo").textContent="可按「再玩一次」重新挑戰。";return;}
- const q=questions[order[index]];
- $("section").textContent=q.unit+"｜"+q.title;$("question").textContent=q.q;$("progress").textContent=`第 ${index+1} / ${order.length} 題`;$("score").textContent=score;
- $("chips").innerHTML="";chipValues().forEach(v=>{const b=document.createElement("button");b.className="chip"+(selected===v?" selected":"");b.innerHTML=`${v}<small>分籌碼</small>`;b.disabled=judged;b.onclick=()=>{selected=v;render();};$("chips").appendChild(b);});
- $("answerText").textContent=q.a;$("answer").classList.toggle("show",revealed);$("judgeActions").classList.remove("hidden");$("reveal").disabled=selected===null||revealed||judged;$("correct").disabled=selected===null||!revealed||judged;$("wrong").disabled=selected===null||!revealed||judged;$("next").disabled=!judged;$("next").textContent="下一題 →";
- $("feedback").textContent=judged? $("feedback").textContent:"";$("betInfo").textContent=selected===null?"選好籌碼後，請學生作答，再由老師判定。":`已選擇 ${selected} 分籌碼。答對 +${selected} 分，答錯 −${selected} 分。`;
+
+/* 匯入的題目另外保存，不會覆蓋原始題庫 */
+let importedQuestions = [];
+let score = 0;
+let order = [];
+let index = 0;
+let selected = null;
+let judged = false;
+let revealed = false;
+
+const $ = id => document.getElementById(id);
+
+function allQuestions() {
+  return [...originalQuestions, ...importedQuestions];
 }
-$("reveal").onclick=()=>{revealed=true;render();};
-$("correct").onclick=()=>{score+=selected;judged=true;$("feedback").textContent=`答對了！ +${selected} 分 🎉`;render();$("score").textContent=score;};
-$("wrong").onclick=()=>{score=Math.max(0,score-selected);judged=true;$("feedback").textContent=`答錯了！ −${selected} 分，繼續加油！`;render();$("score").textContent=score;};
-$("next").onclick=()=>{if(index>=order.length){makeOrder();return;}index++;selected=null;judged=false;revealed=false;render();};
-$("restart").onclick=()=>{score=0;makeOrder();};
-$("sectionFilter").onchange=()=>makeOrder();
+
+/* 根據題庫自動建立單元選單 */
+function refreshUnitOptions(keepSelection = true) {
+  const filter = $("sectionFilter");
+  const oldValue = keepSelection ? filter.value : "all";
+  const questions = allQuestions();
+  const units = new Map();
+
+  questions.forEach(q => {
+    if (!units.has(q.unit)) units.set(q.unit, q.title);
+  });
+
+  filter.innerHTML = "";
+
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = "全部單元";
+  filter.appendChild(allOption);
+
+  units.forEach((title, unit) => {
+    const option = document.createElement("option");
+    option.value = unit;
+    option.textContent = `${unit} ${title}`;
+    filter.appendChild(option);
+  });
+
+  if ([...filter.options].some(o => o.value === oldValue)) {
+    filter.value = oldValue;
+  } else {
+    filter.value = "all";
+  }
+}
+
+/* 依照目前單元篩選題目 */
+function makeOrder() {
+  const filter = $("sectionFilter").value;
+  const questions = allQuestions();
+
+  order = questions
+    .map((_, i) => i)
+    .filter(i => filter === "all" || questions[i].unit === filter);
+
+  index = 0;
+  selected = null;
+  judged = false;
+  revealed = false;
+  render();
+}
+
+/* 籌碼規則：第一題 1/3/5，之後逐題提高 */
+function chipValues() {
+  if (index === 0) return [1, 3, 5];
+
+  return [
+    5 + (index - 1) * 5,
+    10 + (index - 1) * 5,
+    15 + (index - 1) * 5
+  ];
+}
+
+function render() {
+  const questions = allQuestions();
+
+  $("score").textContent = score;
+  $("feedback").textContent = "";
+
+  if (order.length === 0) {
+    $("section").textContent = "目前沒有題目";
+    $("question").textContent = "請匯入題庫，或選擇其他單元。";
+    $("progress").textContent = "0 題";
+    $("chips").innerHTML = "";
+    $("answer").classList.remove("show");
+    $("judgeActions").classList.remove("hidden");
+    $("reveal").disabled = true;
+    $("correct").disabled = true;
+    $("wrong").disabled = true;
+    $("next").disabled = true;
+    $("betInfo").textContent = "請從上方選擇其他單元。";
+    return;
+  }
+
+  if (index >= order.length) {
+    $("section").textContent = "挑戰完成";
+    $("question").textContent = "🎉 太棒了！本輪題目全部完成！";
+    $("chips").innerHTML = "";
+    $("answer").classList.remove("show");
+    $("judgeActions").classList.add("hidden");
+    $("next").textContent = "再玩一次 ↻";
+    $("next").disabled = false;
+    $("progress").textContent = `完成 ${order.length} 題`;
+    $("feedback").textContent = `本輪結束！目前積分：${score} 分`;
+    $("betInfo").textContent = "可按「再玩一次」重新挑戰。";
+    return;
+  }
+
+  const q = questions[order[index]];
+
+  $("section").textContent = `${q.unit}｜${q.title}`;
+  $("question").textContent = q.q;
+  $("progress").textContent = `第 ${index + 1} / ${order.length} 題`;
+
+  $("chips").innerHTML = "";
+
+  chipValues().forEach(value => {
+    const button = document.createElement("button");
+    button.className = "chip" + (selected === value ? " selected" : "");
+    button.innerHTML = `${value}<small>分籌碼</small>`;
+    button.disabled = judged;
+
+    button.onclick = () => {
+      selected = value;
+      render();
+    };
+
+    $("chips").appendChild(button);
+  });
+
+  $("answerText").textContent = q.a;
+  $("answer").classList.toggle("show", revealed);
+  $("judgeActions").classList.remove("hidden");
+
+  $("reveal").disabled = selected === null || revealed || judged;
+  $("correct").disabled = selected === null || !revealed || judged;
+  $("wrong").disabled = selected === null || !revealed || judged;
+  $("next").disabled = !judged;
+  $("next").textContent = "下一題 →";
+
+  $("betInfo").textContent = selected === null
+    ? "選好籌碼後，請學生作答，再由老師判定。"
+    : `已選擇 ${selected} 分籌碼。答對 +${selected} 分，答錯 −${selected} 分。`;
+}
+
+/* 揭曉參考答案 */
+$("reveal").onclick = () => {
+  if (selected === null || judged) return;
+  revealed = true;
+  render();
+};
+
+/* 答對：加分 */
+$("correct").onclick = () => {
+  if (selected === null || !revealed || judged) return;
+
+  score += selected;
+  judged = true;
+  render();
+  $("feedback").textContent = `答對了！ +${selected} 分 🎉`;
+  $("score").textContent = score;
+};
+
+/* 答錯：扣分，但最低為 0 */
+$("wrong").onclick = () => {
+  if (selected === null || !revealed || judged) return;
+
+  score = Math.max(0, score - selected);
+  judged = true;
+  render();
+  $("feedback").textContent = `答錯了！ −${selected} 分，繼續加油！`;
+  $("score").textContent = score;
+};
+
+/* 下一題／本輪結束後再玩 */
+$("next").onclick = () => {
+  if (index >= order.length) {
+    makeOrder();
+    return;
+  }
+
+  index++;
+  selected = null;
+  judged = false;
+  revealed = false;
+  render();
+};
+
+/* 重新開始：分數歸零，使用目前選取的單元 */
+$("restart").onclick = () => {
+  score = 0;
+  makeOrder();
+};
+
+/* 切換單元 */
+$("sectionFilter").onchange = () => {
+  makeOrder();
+};
+
+/* =====================================================
+   JSON 匯入功能
+   支援：
+   1. {"title":"單元名稱","questions":[...]}
+   2. 直接使用題目陣列 [...]
+   每題至少需要 unit、title、q、a
+   ===================================================== */
+$("importBtn").onclick = async () => {
+  const file = $("jsonFile").files[0];
+
+  if (!file) {
+    $("importStatus").textContent = "請先選擇一個 JSON 檔案。";
+    return;
+  }
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    let incoming;
+    if (Array.isArray(data)) {
+      incoming = data;
+    } else if (data && Array.isArray(data.questions)) {
+      incoming = data.questions;
+    } else {
+      throw new Error("格式錯誤：請使用題目陣列，或包含 questions 陣列的物件。");
+    }
+
+    if (incoming.length === 0) {
+      throw new Error("這個 JSON 檔案沒有題目。");
+    }
+
+    const normalized = incoming.map((q, i) => {
+      if (!q || typeof q !== "object") {
+        throw new Error(`第 ${i + 1} 題格式錯誤。`);
+      }
+
+      const unit = String(q.unit ?? "").trim();
+      const title = String(q.title ?? data.title ?? "").trim();
+      const question = String(q.q ?? "").trim();
+      const answer = String(q.a ?? "").trim();
+
+      if (!unit || !title || !question || !answer) {
+        throw new Error(
+          `第 ${i + 1} 題缺少欄位。每題都需要 unit、title、q、a。`
+        );
+      }
+
+      return {
+        unit,
+        title,
+        q: question,
+        a: answer
+      };
+    });
+
+    importedQuestions.push(...normalized);
+
+    refreshUnitOptions(true);
+
+    /* 匯入成功後自動切換到全部題目，重新開始本輪 */
+    $("sectionFilter").value = "all";
+    makeOrder();
+
+    $("importStatus").textContent =
+      `匯入成功！新增 ${normalized.length} 題，目前總題數 ${allQuestions().length} 題。` +
+      `\n原始植物題庫仍然保留。`;
+
+    $("jsonFile").value = "";
+  } catch (error) {
+    $("importStatus").textContent =
+      `匯入失敗：${error.message || "請檢查 JSON 格式。"}`;
+  }
+};
+
+/* 下載可編輯的 JSON 範例檔 */
+$("downloadExample").onclick = () => {
+  const example = {
+    title: "四年級自然科",
+    questions: [
+      {
+        unit: "4-1",
+        title: "月亮的位置",
+        q: "月亮大致從哪個方向升起？",
+        a: "東方。"
+      },
+      {
+        unit: "4-1",
+        title: "月亮的位置",
+        q: "月亮在天空中的位置會隨時間改變嗎？",
+        a: "會，月亮的位置會隨時間改變。"
+      },
+      {
+        unit: "4-2",
+        title: "光與影子",
+        q: "影子的方向通常和光源位於物體的哪一側？",
+        a: "影子位於物體背向光源的一側。"
+      }
+    ]
+  };
+
+  const blob = new Blob(
+    [JSON.stringify(example, null, 2)],
+    {type:"application/json;charset=utf-8"}
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "自然科題庫範例.json";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+};
+
+/* 初次載入 */
+refreshUnitOptions(false);
 makeOrder();
 </script>
 </body>
