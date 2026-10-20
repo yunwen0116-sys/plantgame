@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>自然科題庫生成器｜錶哥熊</title>
+
+<style>
+:root {
+  --ink:#18382d;
+  --green:#16834f;
+  --mint:#e7f8ee;
+  --gold:#ffd166;
+  --coral:#ef7868;
+  --glass-border:rgba(255,255,255,.78);
+}
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  min-height:100vh;
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(ellipse at 8% 8%,rgba(114,220,159,.35),transparent 36%),
+    radial-gradient(ellipse at 92% 18%,rgba(255,209,102,.30),transparent 32%),
+    linear-gradient(135deg,#eaf8ef 0%,#f7fff9 48%,#fff7e7 100%);
+  background-attachment:fixed;
+}
+
+body:before,body:after {
+  content:"";
+  position:fixed;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:50%;
+  filter:blur(2px);
+  opacity:.45;
+}
+body:before {
+  width:240px;height:240px;left:-80px;bottom:8%;
+  background:linear-gradient(135deg,#8ee5b2,#d8ffe5);
+}
+body:after {
+  width:300px;height:300px;right:-110px;top:20%;
+  background:linear-gradient(135deg,#ffe4a0,#fff3cf);
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:16px clamp(12px,4vw,42px);
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  border-bottom:1px solid rgba(255,255,255,.85);
+  box-shadow:0 8px 30px rgba(36,91,58,.07);
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
+  font-size:clamp(17px,2.5vw,25px);
+  letter-spacing:-.03em;
+}
+
+.brand-icon {
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:46px;
+  border-radius:16px;
+  background:linear-gradient(145deg,#d9fbe5,#fff);
+  box-shadow:inset 0 1px 0 #fff,0 7px 18px #24745c18;
+  font-size:25px;
+  flex-shrink:0;
+}
+
+.brand small,.sponsor-btn small {
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.03em;
+  opacity:.7;
+  margin-top:3px;
+}
+
+.header-actions {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.sponsor-btn {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  text-decoration:none;
+  color:#185b3a;
+  padding:8px 12px;
+  border-radius:17px;
+  border:1px solid rgba(255,255,255,.9);
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(224,250,233,.75));
+  box-shadow:0 6px 18px rgba(25,104,61,.10),inset 0 1px 0 #fff;
+  transition:transform .2s,box-shadow .2s;
+}
+.sponsor-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(25,104,61,.17);
+}
+.sponsor-bear {
+  display:block;
+  width:38px;
+  height:38px;
+  border-radius:13px;
+  background:#dff7e7;
+  object-fit:contain;
+}
+
+main {
+  max-width:1100px;
+  margin:28px auto;
+  padding:0 16px 50px;
+}
+
+.intro {
+  margin-bottom:20px;
+  padding:25px clamp(20px,4vw,36px);
+  border:1px solid var(--glass-border);
+  border-radius:26px;
+  background:rgba(255,255,255,.62);
+  box-shadow:0 15px 40px rgba(32,83,53,.07);
+  backdrop-filter:blur(20px);
+}
+
+.intro h1 {
+  margin:0 0 10px;
+  font-size:clamp(25px,4vw,36px);
+  letter-spacing:-.03em;
+}
+.intro p {
+  margin:0;
+  color:#62786d;
+  line-height:1.8;
+}
+
+.layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:18px;
+  align-items:start;
+}
+
+.panel {
+  min-width:0;
+  padding:clamp(18px,3vw,28px);
+  border:1px solid var(--glass-border);
+  border-radius:26px;
+  background:rgba(255,255,255,.68);
+  box-shadow:0 18px 48px rgba(32,83,53,.08),inset 0 1px 0 #fff;
+  backdrop-filter:blur(22px) saturate(140%);
+}
+
+.panel h2 {
+  font-size:21px;
+  margin:0 0 18px;
+}
+.panel h3 {
+  font-size:16px;
+  margin:0 0 12px;
+}
+
+.field {
+  margin-bottom:15px;
+}
+.field label {
+  display:block;
+  font-weight:800;
+  font-size:14px;
+  margin-bottom:7px;
+}
+input,textarea,select,button {
+  font:inherit;
+}
+input,textarea,select {
+  width:100%;
+  min-width:0;
+  padding:11px 13px;
+  border:1px solid #d4e9da;
+  border-radius:12px;
+  background:rgba(255,255,255,.88);
+  color:var(--ink);
+  outline:none;
+}
+input:focus,textarea:focus,select:focus {
+  border-color:#52ad78;
+  box-shadow:0 0 0 3px #52ad781c;
+}
+textarea {
+  resize:vertical;
+  min-height:76px;
+  line-height:1.7;
+}
+.row {
+  display:grid;
+  grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);
+  gap:12px;
+}
+
+.btn {
+  border:0;
+  border-radius:14px;
+  padding:11px 16px;
+  font-weight:900;
+  cursor:pointer;
+  transition:transform .18s,box-shadow .18s,filter .18s;
+}
+.btn:hover {
+  transform:translateY(-2px);
+  filter:brightness(1.02);
+  box-shadow:0 7px 17px rgba(30,75,48,.12);
+}
+.btn:disabled {
+  opacity:.45;
+  cursor:not-allowed;
+  transform:none;
+}
+.primary {
+  color:white;
+  background:linear-gradient(135deg,#16834f,#2a9d65);
+  box-shadow:0 6px 15px #16834f25;
+}
+.neutral {
+  color:var(--ink);
+  background:rgba(255,255,255,.85);
+  border:1px solid #dbe9dc;
+}
+.danger {
+  color:#8c2e24;
+  background:linear-gradient(135deg,#ffe8e3,#ffd4cc);
+}
+.gold {
+  color:#684b12;
+  background:linear-gradient(145deg,#fff7d9,#ffe9a0);
+  border:1px solid #f1d078;
+}
+.button-row {
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:14px;
+}
+.button-row .btn { flex:0 0 auto; }
+
+.stats {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:16px;
+}
+.stat {
+  padding:8px 12px;
+  border-radius:12px;
+  background:#e2f8e9;
+  color:#167345;
+  font-size:13px;
+  font-weight:900;
+}
+
+.question-list {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:18px;
+}
+
+.question-item {
+  border:1px solid #dbe9dc;
+  border-radius:17px;
+  padding:14px;
+  background:rgba(255,255,255,.7);
+}
+.question-item-top {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+.question-number {
+  font-size:12px;
+  color:#16834f;
+  font-weight:900;
+  margin-bottom:5px;
+}
+.question-text {
+  font-weight:800;
+  line-height:1.65;
+  overflow-wrap:anywhere;
+}
+.answer-text {
+  color:#62786d;
+  font-size:14px;
+  line-height:1.6;
+  margin-top:7px;
+  overflow-wrap:anywhere;
+}
+.question-item-actions {
+  display:flex;
+  gap:6px;
+  flex-shrink:0;
+}
+.mini-btn {
+  border:1px solid #dbe9dc;
+  background:white;
+  border-radius:9px;
+  padding:6px 9px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:800;
+  color:var(--ink);
+}
+.mini-btn:hover { background:#e7f8ee; }
+.mini-btn.delete { color:#a33c30; }
+
+.empty {
+  padding:25px 12px;
+  text-align:center;
+  color:#789084;
+  border:1px dashed #bdd5c5;
+  border-radius:15px;
+  line-height:1.8;
+}
+
+.preview {
+  width:100%;
+  min-height:300px;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:13px;
+  line-height:1.6;
+  white-space:pre;
+  overflow:auto;
+  background:#f6fbf7;
+  border-color:#d4e9da;
+  tab-size:2;
+}
+.help {
+  color:#62786d;
+  font-size:13px;
+  line-height:1.8;
+}
+.status {
+  margin-top:12px;
+  min-height:24px;
+  font-size:14px;
+  font-weight:800;
+  color:#167345;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+.divider {
+  height:1px;
+  background:#dbe9dc;
+  margin:20px 0;
+}
+footer {
+  text-align:center;
+  padding:0 16px 25px;
+  font-size:12px;
+  color:#648071;
+}
+
+@media(max-width:820px) {
+  .layout { grid-template-columns:1fr; }
+}
+@media(max-width:560px) {
+  header { padding:10px 12px;gap:8px; }
+  .brand { font-size:15px;gap:7px; }
+  .brand-icon { width:36px;height:36px;font-size:20px; }
+  .sponsor-btn { padding:6px;gap:5px; }
+  .sponsor-btn small { display:none; }
+  .sponsor-btn b { font-size:10px; }
+  .sponsor-bear { width:29px;height:29px; }
+  .row { grid-template-columns:1fr;gap:0; }
+  .button-row .btn { flex:1 1 auto; }
+}
+@media(max-width:380px) {
+  .brand small { display:none; }
+  .sponsor-btn span { display:none; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="brand">
+    <span class="brand-icon">🧪</span>
+    <span>自然科題庫生成器<small>自然籌碼挑戰專用工具</small></span>
+  </div>
+
+  <div class="header-actions">
+    <a class="sponsor-btn"
+       href="https://biaogenet.qzz.io/"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="前往錶哥熊網頁">
+      <img class="sponsor-bear"
+           src="https://biaogenet.qzz.io/images/favicon.png"
+           alt="錶哥熊">
+      <span>
+        <b>由錶哥熊贊助</b>
+        <small>拜訪錶哥熊網頁 ↗</small>
+      </span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>🌱 自然科題庫 JSON 生成器</h1>
+    <p>
+      把課本題目整理成題庫，下載後就能匯入「自然籌碼挑戰」。
+      支援簡答題、多個單元及既有 JSON 題庫編輯。
+    </p>
+  </section>
+
+  <div class="layout">
+    <!-- 左側：題目編輯 -->
+    <section class="panel">
+      <h2>📝 題庫設定</h2>
+
+      <div class="field">
+        <label for="bankName">題庫名稱</label>
+        <input id="bankName" value="四年級自然科" placeholder="例如：三年級自然科">
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="unitCode">單元代號</label>
+          <input id="unitCode" value="4-1" placeholder="例如：4-1">
+        </div>
+        <div class="field">
+          <label for="unitName">單元名稱</label>
+          <input id="unitName" value="月亮的位置" placeholder="例如：月亮的位置">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <h3 id="editorHeading">新增題目</h3>
+
+      <div class="field">
+        <label for="questionInput">題目內容</label>
+        <textarea id="questionInput" placeholder="輸入要問學生的問題"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="answerInput">參考答案</label>
+        <textarea id="answerInput" placeholder="輸入老師判定學生答案時的參考內容"></textarea>
+      </div>
+
+      <div class="button-row">
+        <button class="btn primary" id="saveQuestion">＋ 加入題目</button>
+        <button class="btn neutral" id="cancelEdit" hidden>取消編輯</button>
+        <button class="btn gold" id="clearInputs">清空欄位</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>📂 編輯既有題庫</h3>
+      <p class="help">
+        選擇之前下載的 JSON 檔案，可以載入題目並繼續編輯。
+        載入前會詢問是否取代目前編輯區的題目。
+      </p>
+
+      <div class="field">
+        <input id="importFile" type="file" accept=".json,application/json">
+      </div>
+
+      <div class="button-row">
+        <button class="btn neutral" id="loadJson">載入 JSON 題庫</button>
+      </div>
+
+      <div class="status" id="editStatus" role="status" aria-live="polite"></div>
+
+      <div class="divider"></div>
+
+      <div class="stats">
+        <div class="stat" id="questionCount">目前 0 題</div>
+        <div class="stat" id="unitCount">0 個單元</div>
+      </div>
+
+      <h3>📚 題目清單</h3>
+      <div class="question-list" id="questionList"></div>
+    </section>
+
+    <!-- 右側：JSON 預覽與下載 -->
+    <section class="panel">
+      <h2>💾 JSON 預覽與下載</h2>
+
+      <p class="help">
+        預覽內容會隨題目修改而更新。下載的 JSON 可直接匯入
+        「自然籌碼挑戰」。
+      </p>
+
+      <div class="button-row">
+        <button class="btn primary" id="downloadJson">⬇ 下載 JSON</button>
+        <button class="btn neutral" id="copyJson">複製 JSON</button>
+        <button class="btn gold" id="downloadExample">下載範例題庫</button>
+      </div>
+
+      <div class="status" id="previewStatus" role="status" aria-live="polite"></div>
+
+      <div class="divider"></div>
+
+      <label for="jsonPreview"><b>JSON 原始內容</b></label>
+      <textarea id="jsonPreview" class="preview" spellcheck="false" readonly></textarea>
+
+      <div class="divider"></div>
+
+      <h3>📌 使用方式</h3>
+      <p class="help">
+        <b>第一步：</b>設定題庫名稱與單元資料。<br>
+        <b>第二步：</b>輸入題目及參考答案，按「加入題目」。<br>
+        <b>第三步：</b>可以切換單元資料，再繼續新增其他單元的題目。<br>
+        <b>第四步：</b>按「下載 JSON」。<br>
+        <b>第五步：</b>開啟自然籌碼挑戰，展開題庫匯入區並選擇檔案。
+      </p>
+
+      <p class="help">
+        <b>欄位格式：</b><br>
+        <code>unit</code>：單元代號<br>
+        <code>title</code>：單元名稱<br>
+        <code>q</code>：題目<br>
+        <code>a</code>：參考答案
+      </p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  🌿 讓備課更輕鬆，用好奇心探索自然世界 · 網頁架設由錶哥熊贊助
+</footer>
+
+<script>
+let questions = [];
+let editingIndex = null;
+
+const $ = id => document.getElementById(id);
+
+function setStatus(id, message) {
+  $(id).textContent = message;
+}
+
+function getUnitCode() {
+  return $("unitCode").value.trim();
+}
+
+function getUnitName() {
+  return $("unitName").value.trim();
+}
+
+function getBankName() {
+  return $("bankName").value.trim() || "自然科題庫";
+}
+
+function makeQuestionObject() {
+  return {
+    unit: getUnitCode(),
+    title: getUnitName(),
+    q: $("questionInput").value.trim(),
+    a: $("answerInput").value.trim()
+  };
+}
+
+function validateQuestion(q) {
+  if (!q.unit) return "請填寫單元代號。";
+  if (!q.title) return "請填寫單元名稱。";
+  if (!q.q) return "請填寫題目內容。";
+  if (!q.a) return "請填寫參考答案。";
+  return "";
+}
+
+function getBankObject() {
+  return {
+    title: getBankName(),
+    questions: questions.map(q => ({
+      unit: q.unit,
+      title: q.title,
+      q: q.q,
+      a: q.a
+    }))
+  };
+}
+
+function refreshPreview() {
+  $("jsonPreview").value = JSON.stringify(getBankObject(), null, 2);
+
+  $("questionCount").textContent = `目前 ${questions.length} 題`;
+
+  const unitKeys = new Set(questions.map(q => q.unit));
+  $("unitCount").textContent = `${unitKeys.size} 個單元`;
+
+  renderQuestionList();
+}
+
+function renderQuestionList() {
+  const container = $("questionList");
+  container.innerHTML = "";
+
+  if (questions.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "目前還沒有題目。\\n在左側輸入題目與答案後，按「加入題目」。";
+    container.appendChild(empty);
+    return;
+  }
+
+  questions.forEach((q, index) => {
+    const item = document.createElement("article");
+    item.className = "question-item";
+
+    const top = document.createElement("div");
+    top.className = "question-item-top";
+
+    const textArea = document.createElement("div");
+    textArea.style.minWidth = "0";
+    textArea.style.flex = "1";
+
+    const number = document.createElement("div");
+    number.className = "question-number";
+    number.textContent = `${index + 1}. ${q.unit}｜${q.title}`;
+
+    const question = document.createElement("div");
+    question.className = "question-text";
+    question.textContent = q.q;
+
+    const answer = document.createElement("div");
+    answer.className = "answer-text";
+    answer.textContent = `參考答案：${q.a}`;
+
+    textArea.append(number, question, answer);
+
+    const actions = document.createElement("div");
+    actions.className = "question-item-actions";
+
+    const edit = document.createElement("button");
+    edit.className = "mini-btn";
+    edit.type = "button";
+    edit.textContent = "編輯";
+    edit.setAttribute("aria-label", `編輯第 ${index + 1} 題`);
+    edit.onclick = () => startEdit(index);
+
+    const remove = document.createElement("button");
+    remove.className = "mini-btn delete";
+    remove.type = "button";
+    remove.textContent = "刪除";
+    remove.setAttribute("aria-label", `刪除第 ${index + 1} 題`);
+    remove.onclick = () => deleteQuestion(index);
+
+    actions.append(edit, remove);
+    top.append(textArea, actions);
+    item.appendChild(top);
+    container.appendChild(item);
+  });
+}
+
+function clearEditor() {
+  $("questionInput").value = "";
+  $("answerInput").value = "";
+  editingIndex = null;
+
+  $("editorHeading").textContent = "新增題目";
+  $("saveQuestion").textContent = "＋ 加入題目";
+  $("cancelEdit").hidden = true;
+}
+
+function startEdit(index) {
+  const q = questions[index];
+
+  $("unitCode").value = q.unit;
+  $("unitName").value = q.title;
+  $("questionInput").value = q.q;
+  $("answerInput").value = q.a;
+
+  editingIndex = index;
+
+  $("editorHeading").textContent = `編輯第 ${index + 1} 題`;
+  $("saveQuestion").textContent = "儲存修改";
+  $("cancelEdit").hidden = false;
+
+  setStatus("editStatus", `正在編輯第 ${index + 1} 題。`);
+  $("questionInput").focus();
+}
+
+function deleteQuestion(index) {
+  const confirmed = confirm(`確定刪除第 ${index + 1} 題嗎？`);
+  if (!confirmed) return;
+
+  questions.splice(index, 1);
+
+  if (editingIndex === index) {
+    clearEditor();
+  } else if (editingIndex !== null && editingIndex > index) {
+    editingIndex--;
+  }
+
+  refreshPreview();
+  setStatus("editStatus", `已刪除第 ${index + 1} 題。`);
+}
+
+$("saveQuestion").onclick = () => {
+  const q = makeQuestionObject();
+  const error = validateQuestion(q);
+
+  if (error) {
+    setStatus("editStatus", error);
+    return;
+  }
+
+  if (editingIndex === null) {
+    questions.push(q);
+    setStatus("editStatus", "已新增題目。");
+  } else {
+    questions[editingIndex] = q;
+    setStatus("editStatus", "已更新題目。");
+  }
+
+  clearEditor();
+  refreshPreview();
+};
+
+$("cancelEdit").onclick = () => {
+  clearEditor();
+  setStatus("editStatus", "已取消編輯。");
+};
+
+$("clearInputs").onclick = () => {
+  clearEditor();
+  setStatus("editStatus", "已清空題目輸入欄位。");
+};
+
+$("bankName").addEventListener("input", refreshPreview);
+
+/* 下載 JSON 檔案 */
+function downloadJsonFile(filename, data) {
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type:"application/json;charset=utf-8" }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+$("downloadJson").onclick = () => {
+  if (questions.length === 0) {
+    setStatus("previewStatus", "目前沒有題目，請先新增至少一題。");
+    return;
+  }
+
+  const safeName = getBankName()
+    .replace(/[\\/:*?"<>|]/g, "_");
+
+  downloadJsonFile(`${safeName}.json`, getBankObject());
+  setStatus("previewStatus", `已產生 ${safeName}.json`);
+};
+
+/* 複製 JSON */
+$("copyJson").onclick = async () => {
+  const text = $("jsonPreview").value;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus("previewStatus", "JSON 已複製，可以貼到其他編輯器。");
+  } catch {
+    $("jsonPreview").focus();
+    $("jsonPreview").select();
+    setStatus(
+      "previewStatus",
+      "瀏覽器未允許直接複製，已選取 JSON 文字，請使用 Ctrl+C 複製。"
+    );
+  }
+};
+
+/* 下載範例 */
+$("downloadExample").onclick = () => {
+  const example = {
+    title: "四年級自然科",
+    questions: [
+      {
+        unit: "4-1",
+        title: "月亮的位置",
+        q: "月亮大致從哪個方向升起？",
+        a: "東方。"
+      },
+      {
+        unit: "4-1",
+        title: "月亮的位置",
+        q: "月亮在天空中的位置會隨時間改變嗎？",
+        a: "會，月亮的位置會隨時間改變。"
+      },
+      {
+        unit: "4-2",
+        title: "光與影子",
+        q: "影子的方向通常和光源位於物體的哪一側？",
+        a: "影子位於物體背向光源的一側。"
+      }
+    ]
+  };
+
+  downloadJsonFile("自然科題庫範例.json", example);
+  setStatus("previewStatus", "已下載範例題庫。");
+};
+
+/* 匯入既有 JSON */
+$("loadJson").onclick = async () => {
+  const file = $("importFile").files[0];
+
+  if (!file) {
+    setStatus("editStatus", "請先選擇 JSON 檔案。");
+    return;
+  }
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    const incoming = Array.isArray(data)
+      ? data
+      : data && Array.isArray(data.questions)
+        ? data.questions
+        : null;
+
+    if (!incoming) {
+      throw new Error("找不到題目陣列，請檢查 JSON 格式。");
+    }
+
+    const normalized = incoming.map((q, index) => {
+      if (!q || typeof q !== "object") {
+        throw new Error(`第 ${index + 1} 題格式錯誤。`);
+      }
+
+      const item = {
+        unit: String(q.unit ?? "").trim(),
+        title: String(q.title ?? data.title ?? "").trim(),
+        q: String(q.q ?? "").trim(),
+        a: String(q.a ?? "").trim()
+      };
+
+      const error = validateQuestion(item);
+      if (error) {
+        throw new Error(`第 ${index + 1} 題：${error}`);
+      }
+
+      return item;
+    });
+
+    if (!confirm("載入後會取代目前編輯區的題目，確定繼續嗎？")) {
+      return;
+    }
+
+    questions = normalized;
+    clearEditor();
+
+    if (data && !Array.isArray(data) && data.title) {
+      $("bankName").value = String(data.title);
+    }
+
+    $("importFile").value = "";
+    refreshPreview();
+
+    setStatus(
+      "editStatus",
+      `載入成功！共 ${questions.length} 題，可以繼續編輯。`
+    );
+    setStatus("previewStatus", "預覽已更新。");
+  } catch (error) {
+    setStatus("editStatus", `載入失敗：${error.message}`);
+  }
+};
+
+/* 初始畫面 */
+refreshPreview();
+</script>
+</body>
+</html>
